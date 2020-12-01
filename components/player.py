@@ -4,10 +4,12 @@ GREEN,
 SCREEN_HEIGHT,
 SCREEN_WIDTH
 )
+from components.bullet import Bullet
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, game):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50,50))
+        self.game = game
+        self.image = pygame.Surface((30,20))
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.rect.centerx = SCREEN_WIDTH/2
@@ -27,4 +29,8 @@ class Player(pygame.sprite.Sprite):
             if self.rect.right >= SCREEN_WIDTH:
                 self.rect.right = SCREEN_WIDTH
 
-
+    def shoot(self):
+        bullet = Bullet(self.rect.centerx, self.rect.top)
+        self.game.all_sprites.add(bullet)
+        self.bullets = pygame.sprite.Group()
+        self.bullets.add(bullet)
